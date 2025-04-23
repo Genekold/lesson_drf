@@ -83,7 +83,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'lesson_drf',
         'USER': 'postgres',
-        'PASSWORD': '356645'
+        'PASSWORD': '356645',
+        'PORT': '5433',
     }
 }
 
