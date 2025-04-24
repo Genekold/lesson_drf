@@ -84,7 +84,6 @@ DATABASES = {
         'NAME': 'lesson_drf',
         'USER': 'postgres',
         'PASSWORD': '356645',
-        'PORT': '5433',
     }
 }
 
