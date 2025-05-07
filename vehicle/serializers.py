@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from rest_framework.pagination import PageNumberPagination
 
 from vehicle.models import Car, Moto, Milage
+from vehicle.validators import TitleValidator
 
 
 class MilageSerializer(serializers.ModelSerializer):
@@ -12,7 +14,7 @@ class MilageSerializer(serializers.ModelSerializer):
 
 class CarSerializer(serializers.ModelSerializer):
     last_milage = serializers.IntegerField(source="milage.all.first.milage")
-    milage = MilageSerializer(source='milage_set', many=True)
+    milage = MilageSerializer(many=True)
 
     class Meta:
         model = Car
@@ -46,6 +48,10 @@ class MotoCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Moto
         fields = "__all__"
+        validators = [
+            TitleValidator(field="title"),
+            serializers.UniqueTogetherValidator(fields=["title", "description"], queryset=Moto.objects.all())
+        ]
 
     def create(self, validated_data):
         milage = validated_data.pop('milage')
